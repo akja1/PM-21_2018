@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue May  8 10:58:52 2018
-
-@author: Alina
-"""
-
-"""
 Created on Sun May  6 20:09:50 2018
 
 @author: Alina
@@ -41,15 +35,11 @@ def total_after(squares_number):
     return sum_on_square
 
 
- #hier startet das Hauptprogramm
+
 benutzereingabe = input("Von welchem Quadrat des Schachbretts soll die Anzahl der Reiskörner ermittelt werden?\n")
-
 squares_number = get_square_number(benutzereingabe)
-
 squares_number = validate_square_number(squares_number)
-
 rice_on_one_square = on_square(squares_number)
-
 sum_of_squares = total_after(squares_number)
 
 if squares_number == 1:

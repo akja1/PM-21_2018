@@ -1,14 +1,16 @@
-gueltige_nukleotide = ['A', 'T', 'G', 'C']
+nukleotide ={"A": {'name': "Adenin", 'gewicht': 313210, 'compl': 'T'},
+             "T": {'name': "Thymin", 'gewicht': 304200, 'compl': 'A'},
+             "G": {'name': "Guanin", 'gewicht': 329210, 'compl': 'G'},
+             "C": {'name': "Cytosin", 'gewicht': 289180, 'compl': 'C'},
+             }
+
 
 # Molekulargewichte in mg/mol
-# Nukleotidmonophosphate ohne 3'-OH-Gruppe
-mw_a = 313210
-mw_t = 304200
-mw_g = 329210
-mw_c = 289180
-# freie OH-Gruppe am 3'-Ende eines DNA-Fragments
-mw_oh = 17010
-
+molek_gewicht_oh = {"OH" : 17010}            
+          # freie OH-Gruppe am 3'-Ende eines DNA-Fragments
+                      
+                     
+from collections import Counter
 
 def ist_valide_sequenz(seq, alphabet, match_case=False):
     """Prüfe, ob eine Sequenz nur Buchstaben des erlaubten Alphabets enthält.
@@ -43,7 +45,7 @@ def hole_dna_sequenz(erlaubte_nukleotide):
         sequence = input('Gib eine DNA-Sequenz ein: ')
 
         if ist_valide_sequenz(sequence, erlaubte_nukleotide):
-            return sequence
+            return sequence.upper()
 
         # Dieser Teil wird ausgeführt wenn die Bedingung hinter if
         # nicht erfüllt war.
@@ -55,11 +57,15 @@ def hole_dna_sequenz(erlaubte_nukleotide):
         print()
         print()
 
+def revers_komplimentaere_dna():
+    pass
+def basenhaeufigkeiten():
+    pass
 
 if __name__ == '__main__':
     # Sequenz einlesen
     # ----------------
-    seq = hole_dna_sequenz(gueltige_nukleotide)
+    seq = hole_dna_sequenz(nukleotide)
 
     # Berechnungen
     # ------------
@@ -67,23 +73,14 @@ if __name__ == '__main__':
     # Sequenzlänge
     seqlen = len(seq)
     # Basenhäufigkeiten
-    n_g = 0
-    n_a = 0
-    n_t = 0
-    n_c = 0
-    for c in seq.upper():
-        if c == 'G':
-            n_g += 1
-        elif c == 'A':
-            n_a += 1
-        elif c == 'T':
-            n_t += 1
-        elif c == 'C':
-            n_c += 1
+    basenhaeufigkeiten = Counter(seq)
+    
+    for nukleotid, anzahl in basenhaeufigkeiten.items():
+        print(" Das Nukleotid %s kommt %s Mal vor" % (nukleotide[nukleotid]['name'], anzahl))
     # GC-Gehalt
     gc_gehalt = 100 * (n_g+n_c) / seqlen
     # Molekulargewicht
-    mw_gesamt = n_g*mw_g + n_a*mw_a + n_t*mw_t + n_c*mw_c + mw_oh  # in mg/mol
+    mw_gesamt = sum(int(seq[nukleotide[gewicht]]) + molek_gewicht_oh[OH]  # in mg/mol
 
     # Ausgabe
     # -------
